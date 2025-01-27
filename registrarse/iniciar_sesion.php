@@ -1,3 +1,48 @@
+<?php
+session_start();
+
+// Establecer conexión con la base de datos
+$conn = mysqli_connect('localhost', 'root', '12345678', 'urbanvibes');
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Verificar si el formulario ha sido enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['logout'])) {
+        // Cerrar sesión
+        session_unset();
+        session_destroy();
+        header('Location: ../index.html');
+        exit();
+    } else {
+        // Capturar datos del formulario
+        $email = $_POST['correo'];
+        $password = $_POST['contrasena'];
+
+        // Ejecutar consulta
+        $result = mysqli_query($conn, "SELECT email, contrasena, nombre FROM clientes WHERE email = '$email'");
+        $row = mysqli_fetch_assoc($result);
+
+        // Verificar la contraseña
+        if ($row && password_verify($password, $row['contrasena'])) {
+            // Contraseña correcta, configurar variables de sesión
+            $_SESSION['loggedin'] = true;
+            $_SESSION['name'] = $row['nombre'];
+            $message = "<strong>Bienvenido!</strong> {$row['nombre']}";
+        } else {
+            // Usuario o contraseña incorrectos
+            $message = "<div>Email o Password incorrectos!
+                        <strong>¡Inténtalo de nuevo!</strong></a></div>";
+        }
+    }
+}
+
+// Cerrar la conexión
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -249,19 +294,49 @@ input:focus {
 }
 
 	</style>
+    <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+        <h1>Perfil de Usuario</h1>
+        <p>Bienvenido, <?php echo $_SESSION['name']; ?>!</p>
+        <form method="POST">
+            <button type="submit" name="logout">Cerrar Sesión</button>
+        </form>
+        <div>
+            <form method="POST">
+                <div class="campo">
+                    <label for="correo">Correo Electrónico</label>
+                    <input type="email" id="correo" name="correo" required aria-label="Correo Electrónico">
+                </div>
+                <div class="campo">
+                    <label for="contrase&ntilde;a">Contraseña</label>
+                    <input type="password" id="contrase&ntilde;a" name="contrasena" required aria-label="Contraseña">
+                </div>
+                <a href="iniciar_sesion.php"><button class="boton" type="submit">Iniciar Sesión</button></a>
+            </form>
+        </div>
+    <?php else: ?>
+
+        <?php
+        // Mostrar mensajes (si existen)
+        if (!empty($message)) {
+            echo $message;
+        }
+        ?>
     <div>
-        <form action="usario-inicia.php" method="POST">
+        <form method="POST">
             <div class="campo">
 				<label for="correo">Correo Electronico</label>
                 <input type="email" id="correo" name="correo" required="" aria-label="C&oacute;ooreo Electronico">
             </div>
             <div class="campo">
 				<label for="contrase&ntilde;a">Contrase&ntilde;a</label>
-                <input type="password" id="contrase&ntilde;a" name="contrase&ntilde;a" required="" aria-label="C&oacute;digo Postal">
+                <input type="password" id="contrase&ntilde;a" name="contrasena" required="" aria-label="C&oacute;digo Postal">
             </div>
-            <a href=" "><button class="boton" type="submit">Iniciar Sesion</button></a>
+            <a href="iniciar_sesion.php"><button class="boton" type="submit">Iniciar Sesion</button></a>
         </form>
     </div>
+	
+
+<?php endif; ?>
 </div>
 </div>
 <p></p>
