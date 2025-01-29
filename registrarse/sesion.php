@@ -1,47 +1,6 @@
 <?php
 session_start();
-
-// Establecer conexión con la base de datos
-$conn = mysqli_connect('localhost', 'root', '12345678', 'urbanvibes');
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-// Verificar si el formulario ha sido enviado
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['logout'])) {
-        // Cerrar sesión
-        session_unset();
-        session_destroy();
-        header('Location: ../index.html');
-        exit();
-    } else {
-        // Capturar datos del formulario
-        $email = $_POST['correo'];
-        $password = $_POST['contrasena'];
-
-        // Ejecutar consulta
-        $result = mysqli_query($conn, "SELECT email, contrasena, nombre FROM clientes WHERE email = '$email'");
-        $row = mysqli_fetch_assoc($result);
-
-        // Verificar la contraseña
-        if ($row && password_verify($password, $row['contrasena'])) {
-            // Contraseña correcta, configurar variables de sesión
-            $_SESSION['loggedin'] = true;
-            $_SESSION['name'] = $row['nombre'];
-            $message = "<div style='text-align: center;'>Bienvenido! {$row['nombre']}</div>";
-        } else {
-            // Usuario o contraseña incorrectos
-            $message = "<div style='text-align: center; color: red;'>Email o Password incorrectos!<br><b >¡Inténtalo de nuevo!</b></div>";
-        }
-    }
-}
-
-// Cerrar la conexión
-mysqli_close($conn);
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -421,52 +380,14 @@ input:focus {
 }
 
 	</style>
-    <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
         <p style='text-align: center;'>Bienvenido, <?php echo $_SESSION['name']; ?>!</p>
-        <form method="POST">
+        <form method="POST" action="logout.php">
 		<button class="Btn" type="submit" name="logout">
 			<div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
   
 			<div class="text">Cerrar Sesion</div>
 		</button>
         </form>
-        <div>
-            <form method="POST">
-                <div class="campo">
-                    <label for="correo">Correo Electrónico</label>
-                    <input type="email" id="correo" name="correo" required aria-label="Correo Electrónico">
-                </div>
-                <div class="campo">
-                    <label for="contrase&ntilde;a">Contraseña</label>
-                    <input type="password" id="contrase&ntilde;a" name="contrasena" required aria-label="Contraseña">
-                </div>
-                <a href="iniciar_sesion.php"><button class="boton" type="submit">Iniciar Sesión</button></a>
-            </form>
-        </div>
-    <?php else: ?>
-
-        <?php
-        // Mostrar mensajes (si existen)
-        if (!empty($message)) {
-            echo $message;
-        }
-        ?>
-    <div>
-        <form method="POST">
-            <div class="campo">
-				<label for="correo">Correo Electronico</label>
-                <input type="email" id="correo" name="correo" required="" aria-label="C&oacute;ooreo Electronico">
-            </div>
-            <div class="campo">
-				<label for="contrase&ntilde;a">Contrase&ntilde;a</label>
-                <input type="password" id="contrase&ntilde;a" name="contrasena" required="" aria-label="C&oacute;digo Postal">
-            </div>
-            <a href="iniciar_sesion.php"><button class="boton" type="submit">Iniciar Sesion</button></a>
-        </form>
-    </div>
-	
-
-<?php endif; ?>
 </div>
 </div>
 <p></p>
