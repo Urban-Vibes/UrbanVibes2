@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Pay Integration</title>
+    <script src="https://pay.google.com/gp/p/js/pay.js"></script>
+</head>
+<body>
+
+    <h2>Pagar con Google Pay</h2>
+    <div id="google-pay-button"></div>
+
+    <script>
+        //Crear el cliente de Google Pay
+        const paymentsClient = new google.payments.api.PaymentsClient({ environment: "TEST" });
+
+        //Definir los métodos de pago permitidos
+        const allowedPaymentMethods = [{
+            type: "CARD",
+            parameters: {
+                allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"], // Métodos de autenticación
+                allowedCardNetworks: ["VISA", "MASTERCARD"] // Redes de tarjetas admitidas
+            },
+            tokenizationSpecification: {
+                type: "PAYMENT_GATEWAY",
+                parameters: {
+                    gateway: "stripe",  // Cambia esto según tu procesador de pagos
+                    "stripe:version": "2023-10-16",
+                    "stripe:publishableKey": "pk_test_51Qn0tRRVRd5WGyqTITpzZ8oMzjmYrdygXJ0Q554jASvMvZ7EntnUF7AhAq8xlVKd0wnNmwfrzpCIgYrb4OCPoCXf00qpwTQfp9"
+                }
+            }
+        }];
+
+        //Configuración de la transacción
+        const paymentDataRequest = {
+            apiVersion: 2,
+            apiVersionMinor: 0,
+            allowedPaymentMethods: allowedPaymentMethods,
+            merchantInfo: {
+                merchantId: "BCR2DN4TX7I6FNJ6",
+                merchantName: "Urbanvibes"
+            },
+            transactionInfo: {
+                totalPriceStatus: "FINAL",
+                totalPrice: "10.00",  // Monto de prueba
+                currencyCode: "USD"
+            }
+        };
+
+        //Verificar si Google Pay está disponible
+        paymentsClient.isReadyToPay({ allowedPaymentMethods })
+            .then(response => {
+                if (response.result) {
+                    // 5️⃣ Crear y mostrar el botón de Google Pay
+                    const button = paymentsClient.createButton({ onClick: onGooglePayButtonClicked });
+                    document.getElementById("google-pay-button").appendChild(button);
+                } else {
+                    console.log("Google Pay no está disponible en este dispositivo.");
+                }
+            })
+            .catch(error => console.error("Error en Google Pay:", error));
+
+        //Manejar el evento de pago
+        function onGooglePayButtonClicked() {
+            paymentsClient.loadPaymentData(paymentDataRequest)
+                .then(paymentData => {
+                    console.log("Pago exitoso:", paymentData);
+                    alert("Pago realizado con éxito");
+                    // Aquí puedes enviar el token a tu backend para procesar el pago real
+                })
+                .catch(error => console.error("Error en la transacción:", error));
+        }
+    </script>
+
+</body>
+</html>
