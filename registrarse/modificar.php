@@ -1,39 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect('localhost', 'root', '12345678', 'urbanvibes');
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['correo'];
-    $password = $_POST['contrasena'];
-
-    $result = mysqli_query($conn, "SELECT email, contrasena, nombre FROM clientes WHERE email = '$email'");
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-
-        if (password_verify($password, $row['contrasena'])) {
-            $_SESSION['loggedin'] = true;
-            $_SESSION['name'] = $row['nombre'];
-            $_SESSION['email'] = $row['email']; // Guarda el correo en sesión
-            
-            header("Location: sesion.php"); // Redirigir tras iniciar sesión
-            exit();
-        } else {
-            $message = "<div style='text-align: center; color: red;'>Email o contraseña incorrectos!<br><b>¡Inténtalo de nuevo!</b></div>";
-        }
-    } else {
-        $message = "<div style='text-align: center; color: red;'>Email o contraseña incorrectos!<br><b>¡Inténtalo de nuevo!</b></div>";
-    }
-}
-
-mysqli_close($conn);
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -285,7 +252,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 
 <main class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
 	<div class="wp-block-group has-global-padding is-layout-constrained wp-block-group-is-layout-constrained">
-		<h1 class="has-text-align-center wp-block-post-title">Iniciar Sesion</h1>
+		
 	</div>
 	<div class="entry-content wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained">
 <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-1 wp-block-columns-is-layout-flex">
@@ -353,89 +320,144 @@ input:focus {
     background-color: #228b22; /* Verde bosque */
 }
 
-.Btn {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 65px;
-  height: 65px;
-  border: none;
-  border-radius: 50%;
+.h{
+  margin-right:80px;
+  margin-left:80px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.7em 2em;
+  border: 3px solid #008000;
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+  color: #008000;
+  text-decoration: none;
+  transition: 0.3s ease all;
+  z-index: 1;
+}
+.h:before {
+  transition: 0.5s all ease;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  opacity: 0;
+  content: '';
+  background-color: #008000;
+  z-index: -1;
+}
+
+.h:hover, .h:focus {
+  color: white;
+}
+
+.h:hover:before, .h:focus:before {
+  transition: 0.5s all ease;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+.h:active {
+  transform: scale(0.9);
+}
+
+.f {
+  margin-left:50px;
+  margin-right:50px;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
-  transition-duration: .3s;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-  background-color: rgb(255, 65, 65);
-}
-
-.sign {
-  width: 100%;
-  transition-duration: .3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sign svg {
-  width: 17px;
-}
-
-.sign svg path {
-  fill: white;
-}
-.text {
-  position: absolute;
-  right: 0%;
-  width: 0%;
-  opacity: 0;
-  color: white;
-  font-size: 1.2em;
+  padding: 10px 24px;
+  font-size: 18px;
+  color: #008000;
+  border: 2px solid #008000;
+  border-radius: 34px;
+  background-color: transparent;
   font-weight: 600;
-  transition-duration: .3s;
-}
-.Btn:hover {
-  width: 250px;
-  border-radius: 40px;
-  transition-duration: .3s;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
 }
 
-.Btn:hover .sign {
-  width: 30%;
-  transition-duration: .3s;
-  padding-left: 20px;
+.f::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100px;
+  height: 50px;
+  border-radius: inherit;
+  scale: 0;
+  z-index: -1;
+  background-color: #008000;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
 }
-.Btn:hover .text {
-  opacity: 1;
-  width: 70%;
-  transition-duration: .3s;
-  padding-right: 10px;
+
+.f:hover::before {
+  scale: 3;
 }
-.Btn:active {
-  transform: translate(2px ,2px);
+
+.f:hover {
+  color: #212121;
+  scale: 1.1;
+  box-shadow: 0 0px 20px rgba(193, 163, 98,0.4);
+}
+
+.f:active {
+  scale: 1;
 }
 
 	</style>
-    <div>
-        <form method="POST">
-		<div class="campo">
-			<label for="correo">Correo Electrónico</label>
-			<input type="email" id="correo" name="correo" required="" aria-label="Correo Electrónico">
-		</div>
-		<div class="campo">
-			<label for="contrasena">Contraseña</label>
-			<input type="password" id="contrasena" name="contrasena" required="" aria-label="Contraseña">
-		</div>
-		<button class="boton" type="submit">Iniciar Sesión</button>
-		</form>
-
 <?php
-if (isset($message)) {
-    echo $message;
+session_start();
+$conexion = new mysqli("localhost", "root", "12345678", "urbanvibes");
+
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
 }
+
+$email = $_SESSION['email'];
+$sql = "SELECT dni, nombre, apellidos, email, ciudad FROM clientes WHERE email = '$email'";
+$resultado = $conexion->query($sql);
+
+if ($fila = $resultado->fetch_assoc()) {
+?>
+    <h1 style='text-align: center;'>Modificar Datos</h1>
+    <form action="actualizar.php" method="POST">
+        <table>
+            <tr>
+                <td><b>Nombre:</b></td>
+                <td><input type="text" name="nombre" value="<?php echo $fila['nombre']; ?>"></td>
+            </tr>
+            <tr>
+                <td><b>Apellidos:</b></td>
+                <td><input type="text" name="apellidos" value="<?php echo $fila['apellidos']; ?>"></td>
+            </tr>
+            <tr>
+                <td><b>Correo:</b></td>
+                <td><input type="text" name="email" value="<?php echo $fila['email']; ?>" readonly></td>
+            </tr>
+            <tr>
+                <td><b>Ciudad:</b></td>
+                <td><input type="text" name="ciudad" value="<?php echo $fila['ciudad']; ?>"></td>
+            </tr>
+        </table>
+        <br>
+        <input type="hidden" name="dni" value="<?php echo $fila['dni']; ?>">
+        <button  class="h" type="submit">Confirmar</button>
+    </form>
+<?php
+} else {
+    echo "No se encontraron datos.";
+}
+$conexion->close();
 ?>
 
-    </div>
+		
 </div>
 </div>
 <p></p>

@@ -171,7 +171,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 }
 
 .button-68:hover {
-  background-color: #000000;
+  background-color: #008000;
   opacity: 1;
   transform: translateY(0);
   transition-duration: .35s;
@@ -186,6 +186,26 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
   box-shadow: rgba(39, 174, 96, .2) 0 6px 12px;
 }
 
+.session-banner {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #BAFF04;
+            color: black;
+            padding: 2px 5px;
+            border-radius: 20px;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+        }
+        .session-banner img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+			margin-left:10px;
+        }
+
 </style>
 </head>
 
@@ -199,6 +219,11 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 
 <h1 class="has-link-color wp-elements-e24c80986e13ab3d929b38d6b46e3019 wp-block-site-title has-text-color has-white-color has-medium-font-size"><a href="../index.php" target="_self" rel="home">UrbanVibes</a></h1></div>
 
+<?php if (isset($_SESSION['name'])): ?>
+        <div class="session-banner">
+            <?php echo htmlspecialchars($_SESSION['name']); ?> <img src="../usuario.png" alt="Usuario">
+        </div>
+<?php endif; ?>
 
 <nav class="has-text-color has-base-2-color is-responsive items-justified-left wp-block-navigation is-content-justification-left is-layout-flex wp-container-core-navigation-is-layout-1 wp-block-navigation-is-layout-flex" aria-label="Navegaci&oacute;n" data-wp-interactive="core/navigation" data-wp-context='{"overlayOpenedBy":{"click":false,"hover":false,"focus":false},"type":"overlay","roleAttribute":"","ariaLabel":"Men\u00fa"}'><button aria-haspopup="dialog" aria-label="Abrir el men&uacute;" class="wp-block-navigation__responsive-container-open " data-wp-on-async--click="actions.openMenuOnClick" data-wp-on--keydown="actions.handleMenuKeydown"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="7.5" width="16" height="1.5"></rect><rect x="4" y="15" width="16" height="1.5"></rect></svg></button>
 				<div class="wp-block-navigation__responsive-container  has-text-color has-contrast-color has-background has-base-2-background-color" id="modal-1" data-wp-class--has-modal-open="state.isMenuOpen" data-wp-class--is-menu-open="state.isMenuOpen" data-wp-watch="callbacks.initMenu" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--focusout="actions.handleMenuFocusout" tabindex="-1">
@@ -208,11 +233,14 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 							<div class="wp-block-navigation__responsive-container-content" data-wp-watch="callbacks.focusFirstElement" id="modal-1-content">
 								<ul class="wp-block-navigation__container has-text-color has-base-2-color is-responsive items-justified-left wp-block-navigation">
 								
+								<ul class="wp-block-navigation__container has-text-color has-base-2-color is-responsive items-justified-left wp-block-navigation">
+	<ul class="wp-block-navigation__container has-text-color has-base-2-color is-responsive items-justified-left wp-block-navigation">
+								
 								<li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"> 
-								<a class="wp-block-navigation-item__content" href="../carrito.html"><button class="button-68" role="button"><img src="../cesta.png" width="50px" height="40px"></button></a> 
+								<a class="wp-block-navigation-item__content" href="../carrito.php"><button class="button-68" role="button"><img src="../cesta.png" width="50px" height="40px"></button></a> 
 								</li>
 								
-								<li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../camisetas/index.html">Camisetas</a><button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Submen&uacute; de Camisetas" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-2-background-color wp-block-navigation-submenu"><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-adidas/index.html"><span class="wp-block-navigation-item__label">Camisetas adidas</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-jordan/index.html"><span class="wp-block-navigation-item__label">Camisetas Jordan</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-lacoste/index.html"><span class="wp-block-navigation-item__label">Camisetas Lacoste</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-nike/index.html"><span class="wp-block-navigation-item__label">Camisetas nike</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-puma/index.html"><span class="wp-block-navigation-item__label">Camisetas Puma</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-vans/index.html"><span class="wp-block-navigation-item__label">Camisetas Vans</span></a></li></ul></li><li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../pantalones/index.html">Pantalones</a><button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Submen&uacute; de Pantalones" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-2-background-color wp-block-navigation-submenu"><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-adidas/index.html"><span class="wp-block-navigation-item__label">Pantalones Adidas</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-jordan/index.html"><span class="wp-block-navigation-item__label">Pantalones Jordan</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-lacoste/index.html"><span class="wp-block-navigation-item__label">Pantalones Lacoste</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-nike/index.html"><span class="wp-block-navigation-item__label">Pantalones Nike</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-puma/index.html"><span class="wp-block-navigation-item__label">Pantalones Puma</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-vans/index.html"><span class="wp-block-navigation-item__label">Pantalones Vans</span></a></li></ul></li><li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../chaquetas/index.html">Chaquetas</a><button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Submen&uacute; de Chaquetas" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-2-background-color wp-block-navigation-submenu"><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-adidas/index.html"><span class="wp-block-navigation-item__label">Chaquetas Adidas</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-jordan/index.html"><span class="wp-block-navigation-item__label">Chaquetas Jordan</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-lacoste/index.html"><span class="wp-block-navigation-item__label">Chaquetas Lacoste</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-nike/index.html"><span class="wp-block-navigation-item__label">Chaquetas Nike</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-puma/index.html"><span class="wp-block-navigation-item__label">Chaquetas Puma</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-vans/index.html"><span class="wp-block-navigation-item__label">Chaquetas Vans</span></a></li></ul></li><li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../sudaderas/index.html">Sudaderas</a><button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Submen&uacute; de Sudaderas" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-2-background-color wp-block-navigation-submenu"><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-adidas/index.html"><span class="wp-block-navigation-item__label">Sudaderas Adidas</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-jordan/index.html"><span class="wp-block-navigation-item__label">Sudaderas Jordan</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-lacoste/index.html"><span class="wp-block-navigation-item__label">Sudaderas Lacoste</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-nike/index.html"><span class="wp-block-navigation-item__label">Sudaderas Nike</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-puma/index.html"><span class="wp-block-navigation-item__label">Sudaderas Puma</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-vans/index.html"><span class="wp-block-navigation-item__label">Sudaderas Vans</span></a></li></ul></li><li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../complementos/index.html">Complementos</a><button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Submen&uacute; de Complementos" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-2-background-color wp-block-navigation-submenu"><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../gorras/index.html"><span class="wp-block-navigation-item__label">Gorras</span></a></li></ul></li><li class=" wp-block-navigation-item current-menu-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="index.php" aria-current="page"><span class="wp-block-navigation-item__label">Registrarse</span></a></li></ul>
+								<li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content current-menu-ancestor" href="../camisetas/index.html">Camisetas</a><button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Submen&uacute; de Camisetas" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-2-background-color wp-block-navigation-submenu"><li class=" wp-block-navigation-item current-menu-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="" aria-current="page"><span class="wp-block-navigation-item__label">Camisetas adidas</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-jordan/index.html"><span class="wp-block-navigation-item__label">Camisetas Jordan</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-lacoste/index.html"><span class="wp-block-navigation-item__label">Camisetas Lacoste</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-nike/index.html"><span class="wp-block-navigation-item__label">Camisetas nike</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-puma/index.html"><span class="wp-block-navigation-item__label">Camisetas Puma</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../camisetas-vans/index.html"><span class="wp-block-navigation-item__label">Camisetas Vans</span></a></li></ul></li><li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../pantalones/index.html">Pantalones</a><button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Submen&uacute; de Pantalones" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-2-background-color wp-block-navigation-submenu"><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-adidas/index.html"><span class="wp-block-navigation-item__label">Pantalones Adidas</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-jordan/index.html"><span class="wp-block-navigation-item__label">Pantalones Jordan</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-lacoste/index.html"><span class="wp-block-navigation-item__label">Pantalones Lacoste</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-nike/index.html"><span class="wp-block-navigation-item__label">Pantalones Nike</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-puma/index.html"><span class="wp-block-navigation-item__label">Pantalones Puma</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../pantalones-vans/index.html"><span class="wp-block-navigation-item__label">Pantalones Vans</span></a></li></ul></li><li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../chaquetas/index.html">Chaquetas</a><button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Submen&uacute; de Chaquetas" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-2-background-color wp-block-navigation-submenu"><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-adidas/index.html"><span class="wp-block-navigation-item__label">Chaquetas Adidas</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-jordan/index.html"><span class="wp-block-navigation-item__label">Chaquetas Jordan</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-lacoste/index.html"><span class="wp-block-navigation-item__label">Chaquetas Lacoste</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-nike/index.html"><span class="wp-block-navigation-item__label">Chaquetas Nike</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-puma/index.html"><span class="wp-block-navigation-item__label">Chaquetas Puma</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../chaquetas-vans/index.html"><span class="wp-block-navigation-item__label">Chaquetas Vans</span></a></li></ul></li><li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../sudaderas/index.html">Sudaderas</a><button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Submen&uacute; de Sudaderas" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-2-background-color wp-block-navigation-submenu"><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-adidas/index.html"><span class="wp-block-navigation-item__label">Sudaderas Adidas</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-jordan/index.html"><span class="wp-block-navigation-item__label">Sudaderas Jordan</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-lacoste/index.html"><span class="wp-block-navigation-item__label">Sudaderas Lacoste</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-nike/index.html"><span class="wp-block-navigation-item__label">Sudaderas Nike</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-puma/index.html"><span class="wp-block-navigation-item__label">Sudaderas Puma</span></a></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../sudaderas-vans/index.html"><span class="wp-block-navigation-item__label">Sudaderas Vans</span></a></li></ul></li><li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"><a class="wp-block-navigation-item__content" href="../complementos/index.html">Complementos</a><button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Submen&uacute; de Complementos" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg></button><ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-2-background-color wp-block-navigation-submenu"><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../gorras/index.html"><span class="wp-block-navigation-item__label">Gorras</span></a></li></ul></li><li class=" wp-block-navigation-item wp-block-navigation-link"><a class="wp-block-navigation-item__content" href="../registrarse/index.php"><span class="wp-block-navigation-item__label">Registrarse</span></a></li></ul>
 								
 								<li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu">
 								<a href="filtros.html">
@@ -249,7 +277,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 
 <main class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
 	<div class="wp-block-group has-global-padding is-layout-constrained wp-block-group-is-layout-constrained">
-		<h1 class="has-text-align-center wp-block-post-title">Iniciar Sesion</h1>
+		
 	</div>
 	<div class="entry-content wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained">
 <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-1 wp-block-columns-is-layout-flex">
@@ -317,77 +345,144 @@ input:focus {
     background-color: #228b22; /* Verde bosque */
 }
 
-.Btn {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 65px;
-  height: 65px;
-  border: none;
-  border-radius: 50%;
+.h{
+  margin-left:100px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.7em 2em;
+  border: 3px solid #008000;
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+  color: #008000;
+  text-decoration: none;
+  transition: 0.3s ease all;
+  z-index: 1;
+}
+.h:before {
+  transition: 0.5s all ease;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  opacity: 0;
+  content: '';
+  background-color: #008000;
+  z-index: -1;
+}
+
+.h:hover, .h:focus {
+  color: white;
+}
+
+.h:hover:before, .h:focus:before {
+  transition: 0.5s all ease;
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+.h:active {
+  transform: scale(0.9);
+}
+
+.f {
+  margin-left:50px;
+  margin-right:50px;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
-  transition-duration: .3s;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-  background-color: rgb(255, 65, 65);
-}
-
-.sign {
-  width: 100%;
-  transition-duration: .3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sign svg {
-  width: 17px;
-}
-
-.sign svg path {
-  fill: white;
-}
-.text {
-  position: absolute;
-  right: 0%;
-  width: 0%;
-  opacity: 0;
-  color: white;
-  font-size: 1.2em;
+  padding: 10px 24px;
+  font-size: 18px;
+  color: #008000;
+  border: 2px solid #008000;
+  border-radius: 34px;
+  background-color: transparent;
   font-weight: 600;
-  transition-duration: .3s;
-}
-.Btn:hover {
-  width: 250px;
-  border-radius: 40px;
-  transition-duration: .3s;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
 }
 
-.Btn:hover .sign {
-  width: 30%;
-  transition-duration: .3s;
-  padding-left: 20px;
+.f::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100px;
+  height: 50px;
+  border-radius: inherit;
+  scale: 0;
+  z-index: -1;
+  background-color: #008000;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
 }
-.Btn:hover .text {
-  opacity: 1;
-  width: 70%;
-  transition-duration: .3s;
-  padding-right: 10px;
+
+.f:hover::before {
+  scale: 3;
 }
-.Btn:active {
-  transform: translate(2px ,2px);
+
+.f:hover {
+  color: #212121;
+  scale: 1.1;
+  box-shadow: 0 0px 20px rgba(193, 163, 98,0.4);
+}
+
+.f:active {
+  scale: 1;
 }
 
 	</style>
-        <p style='text-align: center;'>Bienvenido, <?php echo $_SESSION['name']; ?>!</p>
+        <h1 style='text-align: center;'>Bienvenido, <?php echo $_SESSION['name']; ?>!</h1>
+		<form>
+		<?php
+		$conexion = new mysqli("localhost", "root", "12345678", "urbanvibes");
+
+		if ($conexion->connect_error) {
+			die("Error de conexión: " . $conexion->connect_error);
+		}
+
+		$email = $_SESSION['email']; 
+		$sql = "SELECT dni, nombre, apellidos, email, ciudad FROM clientes WHERE email = '$email'";
+		$resultado = $conexion->query($sql);
+
+		echo "<table>";
+		echo "<th style='color: #008000'>Datos Personales</th>";
+
+		while ($fila = $resultado->fetch_assoc()) {
+			echo "<tr>";
+			echo "<td><b>Nombre: </b>" . $fila["nombre"] . "</td>";
+			echo "</tr>";
+			echo "<tr>";
+			echo "<td><b>Apellidos: </b>" . $fila["apellidos"] . "</td>";
+			echo "</tr>";
+			echo "<tr>";
+			echo "<td><b>Correo: </b>" . $fila["email"] . "</td>";
+			echo "</tr>";
+			echo "<tr>";
+			echo "<td><b>Ciudad: </b>" . $fila["ciudad"] . "</td>";
+			echo "</tr>";
+			echo "<tr>";
+			echo "<td class='h'><a href='modificar.php'>Modificar</a></td>";
+			echo "</tr>";
+		}
+
+		echo "</table>";
+
+		$conexion->close();
+		?>
+		</form>
+		
+		
         <form method="POST" action="logout.php">
-		<button class="Btn" type="submit" name="logout">
-			<div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
-  
-			<div class="text">Cerrar Sesion</div>
+		<button class="f" type="submit" name="logout">
+			Cerrar Sesion
 		</button>
         </form>
+		
 </div>
 </div>
 <p></p>
