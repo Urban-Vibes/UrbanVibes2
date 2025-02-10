@@ -344,7 +344,7 @@ ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:
 							<div class="wp-block-navigation__responsive-container-content" data-wp-watch="callbacks.focusFirstElement" id="modal-1-content">
 								<ul class="wp-block-navigation__container has-text-color has-base-2-color is-responsive items-justified-left wp-block-navigation">
 								<li data-wp-context='{ "submenuOpenedBy": { "click": false, "hover": false, "focus": false }, "type": "submenu" }' data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu"> 
-								<a class="wp-block-navigation-item__content" href="carrito.html"><button class="button-68" role="button"><img src="cesta.png" width="50px" height="40px"></button></a> 
+								<a class="wp-block-navigation-item__content" href="carrito.php"><button class="button-68" role="button"><img src="cesta.png" width="50px" height="40px"></button></a> 
 								</li>
 									
 								
