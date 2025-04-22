@@ -18,11 +18,7 @@ html{
 	scroll-behavior: smooth;
 }
 </style>
-<script>
-window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"concatemoji":"wp-includes\/js\/wp-emoji-release.min.js?ver=6.7.1"}};
-/*! This file is auto-generated */
-!function(i,n){var o,s,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),r=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===r[t]})}function u(e,t,n){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\uddfa\ud83c\uddf3","\ud83c\uddfa\u200b\ud83c\uddf3")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!n(e,"\ud83d\udc26\u200d\u2b1b","\ud83d\udc26\u200b\u2b1b")}return!1}function f(e,t,n){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):i.createElement("canvas"),a=r.getContext("2d",{willReadFrequently:!0}),o=(a.textBaseline="top",a.font="600 32px Arial",{});return e.forEach(function(e){o[e]=t(a,e,n)}),o}function t(e){var t=i.createElement("script");t.src=e,t.defer=!0,i.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",s=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){i.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"}),a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=function(e){c(n=e.data),a.terminate(),t(n)})}catch(e){}c(n=f(s,u,p))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
-</script>
+
 <style id="wp-block-site-logo-inline-css">
 .wp-block-site-logo{box-sizing:border-box;line-height:0}.wp-block-site-logo a{display:inline-block;line-height:0}.wp-block-site-logo.is-default-size img{height:auto;width:120px}.wp-block-site-logo img{height:auto;max-width:100%}.wp-block-site-logo a,.wp-block-site-logo img{border-radius:inherit}.wp-block-site-logo.aligncenter{margin-left:auto;margin-right:auto;text-align:center}:root :where(.wp-block-site-logo.is-style-rounded){border-radius:9999px}
 </style>
@@ -311,15 +307,31 @@ ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:
 			margin-left:10px;
         }
 </style>
+<script>
+function checkVisibility() {
+    let elementos = document.querySelectorAll(".ocultar-en-movil-zoom"); 
+    let isMobile = window.innerWidth <= 768; 
+    let isZoomed = window.devicePixelRatio > 3; 
+
+    if (isMobile || isZoomed) {
+        elementos.forEach(el => el.style.display = "none");
+    } else {
+        elementos.forEach(el => el.style.display = "block");
+    }
+}
+
+// Ejecutar cuando cambia el tamaño de la ventana o el zoom
+window.addEventListener("resize", checkVisibility);
+window.addEventListener("load", checkVisibility);
+
+</script>
 </head>
 
 <body class="blog wp-custom-logo wp-embed-responsive">
 
 	
 
-<div style="position: fixed; bottom: 0; right: 0; z-index: 999999999; background: transparent; pointer-events: auto;">
-    <a href="#seccion-1"><img src="boton.gif" alt="Imagen fija" style="display: block; max-width: 100px; max-height: 100px;"></a>
-</div>
+
 
 
 
@@ -330,13 +342,14 @@ ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:
 <div class="wp-block-group is-layout-flex wp-block-group-is-layout-flex"><div class="is-default-size is-style-default wp-block-site-logo"><a href="index.php" class="custom-logo-link" rel="home"><img width="200" height="93" src="wp-content/uploads/2024/11/cropped-logo-2-1-1.png" class="custom-logo" alt="UrbanVibes" decoding="async"></a></div>
 
 <h1 class="has-link-color wp-elements-e24c80986e13ab3d929b38d6b46e3019 wp-block-site-title has-text-color has-white-color has-medium-font-size"><a href="index.php" target="_self" rel="home" aria-current="page">UrbanVibes</a></h1></div>
+
 <?php if (isset($_SESSION['name'])): ?>
         <div class="session-banner">
             <?php echo htmlspecialchars($_SESSION['name']); ?> <img src="usuario.png" alt="Usuario">
         </div>
     <?php endif; ?>
 
-<nav class="has-text-color has-base-2-color is-responsive items-justified-left wp-block-navigation is-content-justification-left is-layout-flex wp-container-core-navigation-is-layout-1 wp-block-navigation-is-layout-flex" aria-label="Navegaci&oacute;n" data-wp-interactive="core/navigation" data-wp-context='{"overlayOpenedBy":{"click":false,"hover":false,"focus":false},"type":"overlay","roleAttribute":"","ariaLabel":"Men\u00fa"}'><button aria-haspopup="dialog" aria-label="Abrir el men&uacute;" class="wp-block-navigation__responsive-container-open " data-wp-on-async--click="actions.openMenuOnClick" data-wp-on--keydown="actions.handleMenuKeydown"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="7.5" width="16" height="1.5"></rect><rect x="4" y="15" width="16" height="1.5"></rect></svg></button>
+<nav class="has-text-color has-base-2-color is-responsive items-justified-left wp-block-navigation is-content-justification-left is-layout-flex wp-container-core-navigation-is-layout-1 wp-block-navigation-is-layout-flex" aria-label="Navegaci&oacute;n" data-wp-interactive="core/navigation" data-wp-context='{"overlayOpenedBy":{"click":false,"hover":false,"focus":false},"type":"overlay","roleAttribute":"","ariaLabel":"Men\u00fa"}'>
 				<div class="wp-block-navigation__responsive-container  has-text-color has-contrast-color has-background has-base-2-background-color" id="modal-1" data-wp-class--has-modal-open="state.isMenuOpen" data-wp-class--is-menu-open="state.isMenuOpen" data-wp-watch="callbacks.initMenu" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--focusout="actions.handleMenuFocusout" tabindex="-1">
 					<div class="wp-block-navigation__responsive-close" tabindex="-1">
 						<div class="wp-block-navigation__responsive-dialog" data-wp-bind--aria-modal="state.ariaModal" data-wp-bind--aria-label="state.ariaLabel" data-wp-bind--role="state.roleAttribute">
@@ -368,7 +381,7 @@ ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:
 					</div>
 				</div></nav></div>
 
-
+<div class="ocultar-en-movil-zoom">
 <div class="n2-section-smartslider fitvidsignore  n2_clear" data-ssid="2"><div class="n2-ss-margin" style="margin: 0px 200px 0px 200px;"><div id="n2-ss-2-align" class="n2-ss-align"><div class="n2-padding"><div id="n2-ss-2" data-creator="Smart Slider 3" data-responsive="auto" class="n2-ss-slider n2-ow n2-has-hover n2notransition  ">
         <div class="n2-ss-slider-1 n2_ss__touch_element n2-ow">
             <div class="n2-ss-slider-2 n2-ow">
@@ -380,7 +393,9 @@ ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:
                                     </div>
             </div>
         </div>
-        </div><ss3-loader></ss3-loader></div></div><div class="n2_clear"></div></div></div></div></div>
+        </div><ss3-loader></ss3-loader></div></div><div class="n2_clear"></div></div></div>
+</div>
+</div></div>
 </div>
 </header>
 
@@ -574,108 +589,12 @@ ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:
 
 
 <div class="wp-block-buttons is-content-justification-center is-layout-flex wp-container-core-buttons-is-layout-1 wp-block-buttons-is-layout-flex">
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="registrarse/index.html">Registro</a></div>
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="registrarse/index.php">Registro</a></div>
 </div>
 
 
 
 <div style="height:var(--wp--preset--spacing--10)" aria-hidden="true" class="wp-block-spacer"></div>
-</div>
-
-
-
-<div class="wp-block-group alignfull has-global-padding is-layout-constrained wp-container-core-group-is-layout-15 wp-block-group-is-layout-constrained" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50)">
-<h2 class="wp-block-heading alignwide has-x-large-font-size" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--40);line-height:1">Enterate de todo&hellip;</h2>
-
-
-
-<div class="wp-block-group alignwide has-global-padding is-layout-constrained wp-block-group-is-layout-constrained">
-<div class="wp-block-query alignwide is-layout-flow wp-block-query-is-layout-flow"><ul class="wp-block-post-template is-layout-flow wp-block-post-template-is-layout-flow"><li class="wp-block-post post-53 post type-post status-publish format-standard hentry category-uncategorized">
-
-<hr class="wp-block-separator has-text-color has-contrast-3-color has-alpha-channel-opacity has-contrast-3-background-color has-background alignwide is-style-wide">
-
-
-
-<div class="wp-block-columns alignwide are-vertically-aligned-center is-layout-flex wp-container-core-columns-is-layout-6 wp-block-columns-is-layout-flex" style="margin-top:var(--wp--preset--spacing--20);margin-bottom:var(--wp--preset--spacing--20)">
-<div class="wp-block-column is-vertically-aligned-center is-layout-flow wp-block-column-is-layout-flow" style="flex-basis:72%"><h2 style="font-size:clamp(0.984rem, 0.984rem + ((1vw - 0.2rem) * 0.86), 1.5rem);line-height:1.1;" class="wp-block-post-title"><a href="2024/11/28/nuevas-zapatillas-nike/index.html" target="_self">Nuevas Zapatillas Nike</a></h2></div>
-
-
-
-<div class="wp-block-column is-vertically-aligned-center is-layout-flow wp-block-column-is-layout-flow" style="flex-basis:28%"><div class="wp-block-template-part">
-
-<div class="wp-block-group has-global-padding is-layout-constrained wp-block-group-is-layout-constrained">
-	
-	<div class="wp-block-group is-content-justification-left is-layout-flex wp-container-core-group-is-layout-10 wp-block-group-is-layout-flex">
-		<div class="wp-block-post-date"><time datetime="2024-11-28T18:51:18+01:00"><a href="2024/11/28/nuevas-zapatillas-nike/index.html">Nov 28, 2024</a></time></div>
-
-		
-		<p class="has-contrast-2-color has-text-color">&mdash;</p>
-		
-
-		
-		<p class="has-small-font-size has-contrast-2-color has-text-color">por</p>
-		
-
-		<div class="wp-block-post-author-name"><a href="author/admin/index.html" target="_self" class="wp-block-post-author-name__link">admin</a></div>
-
-		<div class="taxonomy-category wp-block-post-terms"><span class="wp-block-post-terms__prefix">en </span><a href="category/uncategorized/index.html" rel="tag">Uncategorized</a></div>
-
-	</div>
-	
-</div>
-
-
-</div></div>
-</div>
-
-</li><li class="wp-block-post post-49 post type-post status-publish format-standard hentry category-uncategorized">
-
-<hr class="wp-block-separator has-text-color has-contrast-3-color has-alpha-channel-opacity has-contrast-3-background-color has-background alignwide is-style-wide">
-
-
-
-<div class="wp-block-columns alignwide are-vertically-aligned-center is-layout-flex wp-container-core-columns-is-layout-7 wp-block-columns-is-layout-flex" style="margin-top:var(--wp--preset--spacing--20);margin-bottom:var(--wp--preset--spacing--20)">
-<div class="wp-block-column is-vertically-aligned-center is-layout-flow wp-block-column-is-layout-flow" style="flex-basis:72%"><h2 style="font-size:clamp(0.984rem, 0.984rem + ((1vw - 0.2rem) * 0.86), 1.5rem);line-height:1.1;" class="wp-block-post-title"><a href="2024/11/28/hombres/index.html" target="_self">Ultimas Novedades</a></h2></div>
-
-
-
-<div class="wp-block-column is-vertically-aligned-center is-layout-flow wp-block-column-is-layout-flow" style="flex-basis:28%"><div class="wp-block-template-part">
-
-<div class="wp-block-group has-global-padding is-layout-constrained wp-block-group-is-layout-constrained">
-	
-	<div class="wp-block-group is-content-justification-left is-layout-flex wp-container-core-group-is-layout-12 wp-block-group-is-layout-flex">
-		<div class="wp-block-post-date"><time datetime="2024-11-28T18:50:03+01:00"><a href="2024/11/28/hombres/index.html">Nov 28, 2024</a></time></div>
-
-		
-		<p class="has-contrast-2-color has-text-color">&mdash;</p>
-		
-
-		
-		<p class="has-small-font-size has-contrast-2-color has-text-color">por</p>
-		
-
-		<div class="wp-block-post-author-name"><a href="author/admin/index.html" target="_self" class="wp-block-post-author-name__link">admin</a></div>
-
-		<div class="taxonomy-category wp-block-post-terms"><span class="wp-block-post-terms__prefix">en </span><a href="category/uncategorized/index.html" rel="tag">Uncategorized</a></div>
-
-	</div>
-	
-</div>
-
-
-</div></div>
-</div>
-
-</li></ul>
-
-
-<div style="height:var(--wp--preset--spacing--30)" aria-hidden="true" class="wp-block-spacer"></div>
-
-
-
-
-</div>
-</div>
 </div>
 </main>
 
@@ -692,7 +611,28 @@ ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:
 
 
 
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d239138.49162818224!2d-3.844343139177244!3d40.4380986102433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422997800a3c81%3A0xc436dec1618c2269!2sMadrid!5e1!3m2!1ses!2ses!4v1734290862843!5m2!1ses!2ses" width="450" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<div class="map-container98">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d239138.49162818224!2d-3.844343139177244!3d40.4380986102433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422997800a3c81%3A0xc436dec1618c2269!2sMadrid!5e1!3m2!1ses!2ses!4v1734290862843!5m2!1ses!2ses" width="450" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+
+<style>
+    .map-container98 {
+        position: relative;
+        width: 100%;
+        padding-bottom: 75%; /* Esto mantiene la relación de aspecto 4:3 */
+        height: 0;
+        overflow: hidden;
+    }
+
+    .map-container98 iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
 
 
 
@@ -739,7 +679,7 @@ ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:
 
 
 <div class="wp-block-group alignwide is-content-justification-center is-layout-flex wp-container-core-group-is-layout-18 wp-block-group-is-layout-flex">
-<p class="has-text-align-center has-small-font-size"> Proudly powered by <a rel="nofollow" href="https://wordpress.org">WordPress</a> </p>
+<p class="has-text-align-center has-small-font-size">❤️​WEB DISEÑADA Y CREADA POR MARCOS E ISMAEL❤️​</a> </p>
 </div>
 </div>
 </footer></div>
