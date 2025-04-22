@@ -10,13 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['correo'];
     $password = $_POST['contrasena'];
 
-    $result = mysqli_query($conn, "SELECT email, contrasena, nombre FROM clientes WHERE email = '$email'");
+    $result = mysqli_query($conn, "SELECT dni, email, contrasena, nombre FROM clientes WHERE email = '$email'");
 
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
 
         if (password_verify($password, $row['contrasena'])) {
             $_SESSION['loggedin'] = true;
+			$_SESSION['id'] = $row['dni'];
             $_SESSION['name'] = $row['nombre'];
             $_SESSION['email'] = $row['email']; // Guarda el correo en sesión
             

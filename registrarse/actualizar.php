@@ -9,9 +9,12 @@ if ($conexion->connect_error) {
 $dni = $_POST['dni'];
 $nombre = $_POST['nombre'];
 $apellidos = $_POST['apellidos'];
+$nueva = $_POST['contrasena'];
 $ciudad = $_POST['ciudad'];
 
-$sql = "UPDATE clientes SET nombre='$nombre', apellidos='$apellidos', ciudad='$ciudad' WHERE dni=$dni";
+$nueva_encriptada = password_hash($nueva, PASSWORD_DEFAULT);
+
+$sql = "UPDATE clientes SET nombre='$nombre', apellidos='$apellidos', contrasena='$nueva_encriptada', ciudad='$ciudad' WHERE dni=$dni";
 
 if ($conexion->query($sql) === TRUE) {
     // Actualizar la sesión con el nuevo nombre
