@@ -248,8 +248,27 @@ h1.has-background,h2.has-background,h3.has-background,h4.has-background,h5.has-b
 
 
 
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d239138.49162818224!2d-3.844343139177244!3d40.4380986102433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422997800a3c81%3A0xc436dec1618c2269!2sMadrid!5e1!3m2!1ses!2ses!4v1734290862843!5m2!1ses!2ses" width="450" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<div class="map-container98">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d239138.49162818224!2d-3.844343139177244!3d40.4380986102433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422997800a3c81%3A0xc436dec1618c2269!2sMadrid!5e1!3m2!1ses!2ses!4v1734290862843!5m2!1ses!2ses" width="450" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
 
+<style>
+    .map-container98 {
+        position: relative;
+        width: 100%;
+        padding-bottom: 75%; /* Esto mantiene la relación de aspecto 4:3 */
+        height: 0;
+        overflow: hidden;
+    }
+
+    .map-container98 iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
 
 
 <div style="height:24px" aria-hidden="true" class="wp-block-spacer"></div>
