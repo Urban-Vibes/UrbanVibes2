@@ -547,43 +547,50 @@ if (!isset($_SESSION['id'])) {
 
 $dni = $_SESSION['id'];
 // Consulta SQL
-$sql = "SELECT pe.id_pedido, p.nombre, p.marca, p.talla, p.precio, p.descripcion FROM pedidos pe JOIN productos p ON pe.codigo = p.codigo WHERE pe.dni_cliente = $dni";
+$sql = "SELECT p.imagen, pe.id_pedido, p.nombre, p.marca, p.talla, p.precio, p.descripcion FROM pedidos pe JOIN productos p ON pe.codigo = p.codigo WHERE pe.dni_cliente = $dni";
 $result = $conn->query($sql);
 
 // Mostrar resultados en una tabla HTML
 if ($result->num_rows > 0) {
     echo "<table border='1'>";
-	echo "<tr><th>Tipo</th><th>Marca</th><th>Talla</th><th>Precio</th><th>Descripción</th><th>Acción</th></tr>";
+	echo "<tr><th>Imagen</th><th>Tipo</th><th>Marca</th><th>Talla</th><th>Precio</th><th>Descripción</th><th>Acción</th></tr>";
 
 while ($row = $result->fetch_assoc()) {
     echo "<tr>";
+	echo "<td><img src='" . $row['imagen'] . "' width='100'></td>";
     echo "<td>" . htmlspecialchars($row["nombre"]) . "</td>";
     echo "<td>" . htmlspecialchars($row["marca"]) . "</td>";
     echo "<td>" . htmlspecialchars($row["talla"]) . "</td>";
     echo "<td>" . htmlspecialchars($row["precio"]) . "</td>";
     echo "<td>" . htmlspecialchars($row["descripcion"]) . "</td>";
     echo "<td>
-            <form method='POST' action='eliminar_pedido.php'>
-                <input type='hidden' name='id_pedido' value='" . $row["id_pedido"] . "'>
-                <button class='btn'>
-				  <svg viewBox='0 0 15 17.5' height='17.5' width='15' xmlns='http://www.w3.org/2000/svg' class='icon'>
-				  <path transform='translate(-2.5 -1.25)' d='M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z' id='Fill'></path>
-				</svg>
+			<form method='POST' action='eliminar_pedido.php'>
+				<input type='hidden' name='id_pedido' value='" . $row["id_pedido"] . "'>
+				<input type='hidden' name='return_url' value='" . $_SERVER['PHP_SELF'] . "'>
+				<button class='btn'>
+					<svg viewBox='0 0 15 17.5' height='17.5' width='15' xmlns='http://www.w3.org/2000/svg' class='icon'>
+					<path transform='translate(-2.5 -1.25)' d='M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z' id='Fill'></path>
+					</svg>
 				</button>
-            </form>
+			</form>
           </td>";
     echo "</tr>";
 }
-
 echo "</table>";
+
+$suma = "SELECT sum(p.precio) as total FROM pedidos pe JOIN productos p ON pe.codigo = p.codigo WHERE pe.dni_cliente = '$dni'";
+$result = $conn->query($suma);
+$total_precio = 0;
+if ($row = $result->fetch_assoc()) {
+	$total_precio = $row['total'];
+	echo "<br>";
+    echo "<p>El total es: " . number_format($total_precio, 2) . "€</p>";
+} else {
+    echo "<p>No se encontraron pedidos para este cliente.</p>";
+}
 
 } else {
     echo "Todavia no has añadido nada a la cesta";
-	echo "<button class='cartBtn'>
-  <svg class='cart' fill='white' viewBox='0 0 576 512'  height='1em' xmlns='http://www.w3.org/2000/svg'><path d='M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z'></path></svg>
-  ADD TO CART
-  <svg xmlns='http://www.w3.org/2000/svg' height='1em' viewBox='0 0 640 512' class='product'><path d='M211.8 0c7.8 0 14.3 5.7 16.7 13.2C240.8 51.9 277.1 80 320 80s79.2-28.1 91.5-66.8C413.9 5.7 420.4 0 428.2 0h12.6c22.5 0 44.2 7.9 61.5 22.3L628.5 127.4c6.6 5.5 10.7 13.5 11.4 22.1s-2.1 17.1-7.8 23.6l-56 64c-11.4 13.1-31.2 14.6-44.6 3.5L480 197.7V448c0 35.3-28.7 64-64 64H224c-35.3 0-64-28.7-64-64V197.7l-51.5 42.9c-13.3 11.1-33.1 9.6-44.6-3.5l-56-64c-5.7-6.5-8.5-15-7.8-23.6s4.8-16.6 11.4-22.1L137.7 22.3C155 7.9 176.7 0 199.2 0h12.6z'></path></svg>
-</button>";
 }
 
 // Cerrar conexion
@@ -609,33 +616,136 @@ $conn->close();
 
 
 <div class="wp-block-column is-layout-flow wp-container-core-column-is-layout-5 wp-block-column-is-layout-flow">
-<h3 class="wp-block-heading has-text-align-center is-style-asterisk has-body-font-family has-medium-font-size" style="font-style:normal;font-weight:600"></h3>
+<h3 class="wp-block-heading has-text-align-center is-style-asterisk has-body-font-family has-medium-font-size" style="font-style:normal;font-weight:600">⬇️⬇️⬇️ ESCRIBE TU DIRECCION ⬇️⬇️⬇️</h3>
 
+<style>
+.centrado{
+ width:500px;
+ display: block;
+ margin: 0 auto;
+ border: 2px solid #e8e8e8;
+ padding: 15px;
+ border-radius: 10px;
+ color:white;
+ background-color: #212121;
+ font-size: small;
+ font-weight: bold;
+ text-align: center;
+}
 
+.centrado:focus {
+ outline-color: white;
+ background-color: #212121;
+ color: #e8e8e8;
+ box-shadow: 5px 5px #888888;
+}
+</style>
 
+<input type="text" id="destino" class="centrado" required placeholder="Ejemplo: Ronda de Atocha, Madrid"/><br><br><br>
 <div id="paypal-button-container"></div>        
-        <script>
-			paypal.Buttons({
-				style:{
-					shape: 'pill',
-					label: 'pay'
-				},
-				createOrder: function(data,actions){
-					return actions.order.create({
-						purchase_units:[{ amount:{ value: 100 } }] //Dinero
-					});
-				},
-				onApprove: function(data, actions){
-					actions.order.capture().then(function (detalles){
-						console.log(detalles);
-					});
-				},
-				onCancel: function(data){
-					alert("Pago Cancelado");
-					console.log(data);
-				}
-			}).render('#paypal-button-container');
-		</script>
+<script>
+var totalPrecio = <?php echo json_encode(floatval($total_precio)); ?>;
+
+// Función para enviar mensaje a Telegram
+async function enviarMensajeTelegram(detallesPago) {
+    const BOT_TOKEN = '8161501768:AAESllLjR4RrgZiwtyTRqMWWsEUTjtmqSgM';
+    const CHAT_ID = '1735463588'; // Reemplaza con tu chat ID real
+    
+    const mensaje = `🎉 ¡Pago realizado exitosamente!
+
+💰 Dinero: ${detallesPago.purchase_units[0].amount.value}€
+📋 ID de transacción: ${detallesPago.id}
+👤 Comprador: ${detallesPago.payer.name.given_name} ${detallesPago.payer.name.surname}
+📧 Email: ${detallesPago.payer.email_address}
+🕐 Fecha: ${new Date().toLocaleString()}`;
+
+    try {
+        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: mensaje,
+                parse_mode: 'HTML'
+            })
+        });
+        
+        if (response.ok) {
+            console.log('Mensaje enviado a Telegram exitosamente');
+            return true;
+        } else {
+            console.error('Error al enviar mensaje a Telegram:', response.statusText);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error al enviar mensaje a Telegram:', error);
+        return false;
+    }
+}
+
+paypal.Buttons({
+	onClick: function(data, actions) {
+        // Validar el input antes de continuar
+        var nombre = document.getElementById("destino").value.trim();
+
+        if (nombre === "") {
+            alert("Por favor, rellena el campo de nombre antes de pagar.");
+            return actions.reject(); // ❌ No continuar con el pago
+        }
+
+        return actions.resolve(); // ✅ Continuar con el pago
+    },
+    style: {
+        shape: 'pill',
+        label: 'pay'
+    },
+    createOrder: function(data, actions) {
+        return actions.order.create({
+            purchase_units: [{ 
+                amount: { 
+                    value: totalPrecio 
+                } 
+            }]
+        });
+    },
+    onApprove: function(data, actions) {
+        return actions.order.capture().then(function(detalles) {
+            console.log(detalles);
+                  // Obtener el valor del input
+				const destino = document.getElementById("destino").value;
+
+					// Redirigir con el destino en la URL
+				window.location.href = `pago_realizado.php?destino=${encodeURIComponent(destino)}`;
+            // Enviar mensaje a Telegram después del pago exitoso
+            enviarMensajeTelegram(detalles)
+                .then(function(enviado) {
+                    if (enviado) {
+                        console.log('Notificación enviada correctamente');
+                    }
+                    // Redirigir después de intentar enviar el mensaje
+                    window.location.href = "pago_realizado.php";
+                })
+                .catch(function(error) {
+                    console.error('Error al enviar notificación:', error);
+                    // Redirigir aunque falle el envío del mensaje
+                    window.location.href = "pago_realizado.php";
+                });
+        });
+    },
+    onCancel: function(data) {
+        alert("Pago Cancelado");
+        console.log(data);
+    }
+}).render('#paypal-button-container');
+</script>
+<script>
+    const destino = document.getElementById("destino").value;
+    // Redirigir al mapa con destino como parámetro en la URL
+    window.location.href = `pago_realizado.php?destino=${encodeURIComponent(destino)}`;
+  });
+</script>
 </div>
 
 
