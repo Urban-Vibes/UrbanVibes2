@@ -28,79 +28,233 @@ session_start();
 <div class="titulo">Editor</div>
 <div class="fondo">
 <?php
-$basePath = realpath("../../../../UrbanVibes");
-$dir = isset($_GET['dir']) ? $_GET['dir'] : '';
-$actual = realpath($basePath . DIRECTORY_SEPARATOR . $dir);
+// Configuración
+// Define el directorio raíz - AJUSTA ESTA LÍNEA según tu estructura
+$directorioRaiz = 'C:\\Apache24\\htdocs\\tfg\\UrbanVibes\\'; // Usa la ubicación actual del script como raíz
 
-// Seguridad: evitar salirse de la carpeta base
-if (strpos($actual, $basePath) !== 0 || !is_dir($actual)) {
-    $actual = $basePath;
-}
+// Activar reporte de errores para depuración
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+$actual = $directorioRaiz;
+$relativePath = '';
 
-// Si se ha solicitado abrir un archivo
-if (isset($_GET['abrir'])) {
-    $archivo = $_GET['abrir'];
-    $rutaCompleta = realpath($actual . DIRECTORY_SEPARATOR . $archivo);
-
-    // Seguridad: solo si está dentro de UrbanVibes y es archivo
-    if ($rutaCompleta && strpos($rutaCompleta, $basePath) === 0 && is_file($rutaCompleta)) {
-        // Comando para abrir con Notepad (asegúrate de que Notepad está en el PATH)
-        $comando = 'start notepad "' . $rutaCompleta . '"';
-        shell_exec($comando);
-
-        // Mensaje opcional de depuración
-        echo "<pre>Abriendo archivo: $rutaCompleta</pre>";
-    } else {
-        echo "<pre style='color:red;'>No se pudo abrir el archivo.</pre>";
+// Procesar la navegación de directorios
+if (isset($_GET['dir']) && !empty($_GET['dir'])) {
+    $relativePath = $_GET['dir'];
+    $actual = $directorioRaiz . DIRECTORY_SEPARATOR . $relativePath;
+    
+    // Verificar que el directorio existe
+    if (!file_exists($actual) || !is_dir($actual)) {
+        echo "Directorio no encontrado o no es un directorio válido: " . htmlspecialchars($actual);
+        echo "<br>Directorio raíz: " . htmlspecialchars($directorioRaiz);
+        echo "<br>Ruta relativa: " . htmlspecialchars($relativePath);
+        echo "<br><a href='?'>Volver al inicio</a>";
+        exit;
     }
 }
 
-// Leer archivos y carpetas
-$elementos = scandir($actual);
-$elementos = array_diff($elementos, ['.', '..']);
+// Modo edición de archivo
+$modoEdicion = false;
+$contenidoArchivo = '';
+$archivoParaEditar = '';
 
-// Obtener ruta relativa para mostrar
-$relativePath = str_replace($basePath, '', $actual);
-$relativePath = ltrim(str_replace('\\', '/', $relativePath), '/');
+// Si se solicita abrir un archivo
+if (isset($_GET['abrir']) && !empty($_GET['abrir'])) {
+    $nombreArchivo = $_GET['abrir'];
+    $rutaArchivo = $actual . DIRECTORY_SEPARATOR . $nombreArchivo;
+    
+    // Verificar que el archivo existe
+    if (file_exists($rutaArchivo) && is_file($rutaArchivo)) {
+        $modoEdicion = true;
+        $archivoParaEditar = $nombreArchivo;
+        $contenidoArchivo = file_get_contents($rutaArchivo);
+    } else {
+        echo "Archivo no encontrado: " . htmlspecialchars($rutaArchivo);
+        echo "<br><a href='?dir=" . urlencode($relativePath) . "'>Volver</a>";
+        exit;
+    }
+}
+
+// Si se envía el formulario para guardar cambios
+if (isset($_POST['guardar']) && isset($_POST['archivo']) && isset($_POST['contenido'])) {
+    $nombreArchivo = $_POST['archivo'];
+    $rutaArchivo = $actual . DIRECTORY_SEPARATOR . $nombreArchivo;
+    
+    // Verificar que el archivo existe
+    if (file_exists($rutaArchivo) && is_file($rutaArchivo)) {
+        // Intentar guardar los cambios en el archivo
+        if (is_writable($rutaArchivo)) {
+            file_put_contents($rutaArchivo, $_POST['contenido']);
+            
+            // Redirigir para evitar reenvío del formulario
+            header("Location: ?dir=" . urlencode($relativePath) . "&guardado=1");
+            exit;
+        } else {
+            echo "Error: No se puede escribir en el archivo. Verifica los permisos.";
+            echo "<br><a href='?dir=" . urlencode($relativePath) . "'>Volver</a>";
+            exit;
+        }
+    } else {
+        echo "Archivo no encontrado al guardar: " . htmlspecialchars($rutaArchivo);
+        echo "<br><a href='?dir=" . urlencode($relativePath) . "'>Volver</a>";
+        exit;
+    }
+}
+
+// Obtener elementos del directorio actual
+$elementos = array_diff(scandir($actual), ['.', '..']);
 ?>
 
-<?php if ($relativePath): ?>
-    <a href="?dir=<?= urlencode(dirname($relativePath)) ?>">
-	<button class="h">
-		<svg class="svgIcon" viewBox="0 0 384 512">
-		<path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-		</svg>
-	</button>
-	</a>
-<?php endif; ?>
-<table class="hola">
-        <tr><th>Nombre</th><th>Tipo</th><th>Tamaño</th><th>Modificado</th><th>Acción</th></tr>
-        <?php foreach ($elementos as $elemento): 
-            $ruta = $actual . DIRECTORY_SEPARATOR . $elemento;
-            $esCarpeta = is_dir($ruta);
-            $rutaRelativa = $relativePath ? $relativePath . '/' . $elemento : $elemento;
-        ?>
-            <tr>
-                <td>
-                    <?php if ($esCarpeta): ?>
-                        📁 <a href="?dir=<?= urlencode($rutaRelativa) ?>"><?= htmlspecialchars($elemento) ?></a>
-                    <?php else: ?>
-                        📄 <?= htmlspecialchars($elemento) ?>
-                    <?php endif; ?>
-                </td>
-                <td><?= $esCarpeta ? "Carpeta" : "Archivo" ?></td>
-                <td><?= $esCarpeta ? "-" : round(filesize($ruta) / 1024, 2) . " KB" ?></td>
-                <td><?= date("d-m-Y H:i", filemtime($ruta)) ?></td>
-                <td>
-                    <?php if (!$esCarpeta): ?>
-						<a href="?dir=<?= urlencode($relativePath) ?>&abrir=<?= urlencode($elemento) ?>">Abrir</a>
-                    <?php else: ?>
-                        -
-                    <?php endif; ?>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-</table>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorador de Archivos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: <?php echo $modoEdicion ? 'column' : 'column'; ?>;
+            gap: 20px;
+        }
+        .explorador {
+            flex: 1;
+        }
+        .editor {
+            flex: 2;
+        }
+        .breadcrumb {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .hola {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .hola th, .hola td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .hola th {
+            background-color: #f2f2f2;
+        }
+        .hola tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .hola tr:hover {
+            background-color: #f1f1f1;
+        }
+        textarea {
+            width: 100%;
+            height: 500px;
+            font-family: monospace;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        .mensaje {
+            padding: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .volver {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Explorador de Archivos</h1>
+    
+    <?php if (isset($_GET['guardado']) && $_GET['guardado'] == 1): ?>
+        <div class="mensaje">¡Archivo guardado correctamente!</div>
+    <?php endif; ?>
+    
+    <div class="container">
+        <!-- Explorador de archivos -->
+        <div class="explorador">
+            <!-- Breadcrumb para navegación -->
+            <div class="breadcrumb">
+                <a href="?">Inicio</a>
+                <?php
+                if (!empty($relativePath)) {
+                    $partes = explode(DIRECTORY_SEPARATOR, $relativePath);
+                    $rutaAcumulada = '';
+                    foreach ($partes as $parte) {
+                        $rutaAcumulada .= ($rutaAcumulada ? DIRECTORY_SEPARATOR : '') . $parte;
+                        echo ' / <a href="?dir=' . urlencode($rutaAcumulada) . '">' . htmlspecialchars($parte) . '</a>';
+                    }
+                }
+                ?>
+            </div>
+            
+            <!-- Tabla de archivos y carpetas -->
+            <table class="hola">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Tamaño</th>
+                    <th>Modificado</th>
+                    <th>Acción</th>
+                </tr>
+                <?php foreach ($elementos as $elemento): 
+                    $ruta = $actual . DIRECTORY_SEPARATOR . $elemento;
+                    $esCarpeta = is_dir($ruta);
+                    $rutaRelativa = $relativePath ? $relativePath . DIRECTORY_SEPARATOR . $elemento : $elemento;
+                ?>
+                    <tr>
+                        <td>
+                            <?php if ($esCarpeta): ?>
+                                📁 <a href="?dir=<?= urlencode($rutaRelativa) ?>"><?= htmlspecialchars($elemento) ?></a>
+                            <?php else: ?>
+                                📄 <?= htmlspecialchars($elemento) ?>
+                            <?php endif; ?>
+                        </td>
+                        <td><?= $esCarpeta ? "Carpeta" : "Archivo" ?></td>
+                        <td><?= $esCarpeta ? "-" : round(filesize($ruta) / 1024, 2) . " KB" ?></td>
+                        <td><?= date("d-m-Y H:i", filemtime($ruta)) ?></td>
+                        <td>
+                            <?php if (!$esCarpeta): ?>
+                                <form method="GET" style="display: inline;">
+                                    <input type="hidden" name="dir" value="<?= urlencode($relativePath) ?>">
+                                    <input type="hidden" name="abrir" value="<?= urlencode($elemento) ?>">
+                                    <button type="submit">Abrir</button>
+                                </form>
+                            <?php else: ?>
+                                -
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+        
+        <!-- Editor de archivo (aparece solo cuando se abre un archivo) -->
+        <?php if ($modoEdicion): ?>
+        <div class="editor">
+            <h2>Editando: <?= htmlspecialchars($archivoParaEditar) ?></h2>
+            <form method="POST">
+                <input type="hidden" name="archivo" value="<?= htmlspecialchars($archivoParaEditar) ?>">
+                <textarea name="contenido"><?= htmlspecialchars($contenidoArchivo) ?></textarea>
+                <div style="margin-top: 10px;">
+                    <button type="submit" name="guardar">Guardar cambios</button>
+                    <a href="?dir=<?= urlencode($relativePath) ?>"><button type="button">Cancelar</button></a>
+                </div>
+            </form>
+        </div>
+        <?php endif; ?>
+    </div>
 </div>
 </div>
 </body>

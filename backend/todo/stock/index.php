@@ -83,8 +83,35 @@ session_start();
 	if (!$conexion) {
 		die("La conexión ha fallado, Error: " . mysqli_connect_error());
 	}
+	
+	$categoria1 = $_POST['categoria1'] ?? '';
+	$categoria2 = $_POST['categoria2'] ?? '';
+	$categoria3 = $_POST['categoria3'] ?? '';
+	$categoria4 = $_POST['categoria4'] ?? '';
+
+	$condiciones = [];
+
+	if (!empty($categoria1)) {
+		$condiciones[] = "nombre = '$categoria1'";
+	}
+	if (!empty($categoria2)) {
+		$condiciones[] = "talla = '$categoria2'";
+	}
+	if (!empty($categoria3)) {
+		$condiciones[] = "precio <= $categoria3";
+	}
+	if (!empty($categoria4)) {
+		$condiciones[] = "marca = '$categoria4'";
+	}
+
 	$seleccion = "SELECT * FROM productos";
+
+	if (count($condiciones) > 0) {
+		$seleccion .= " WHERE " . implode(" AND ", $condiciones);
+	}
+
 	$consulta = mysqli_query($conexion, $seleccion);
+
 	$filas = mysqli_num_rows($consulta);
 	if ($filas > 0) {
 		echo "<table class = 'hola'>";
@@ -101,7 +128,7 @@ session_start();
 		}
 		echo "</table>";
 	} else {
-		echo "No hay datos en la tabla.";
+		echo "<div style='background-color: #ffcccc;color: #a10000;padding: 20px;font-size: 20px;font-weight: bold;text-align: center;border: 2px solid #a10000;border-radius: 10px;box-shadow: 0 0 10px red;margin-top: 20px;'>⚠️ No hay datos que coincidan con el filtro seleccionado.</div>";
 	}
 	mysqli_close($conexion);
 	?>

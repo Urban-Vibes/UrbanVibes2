@@ -31,7 +31,7 @@ mysqli_close($conn);
 <html>
 <head>
 <title>Administrador Urbanvibes</title>
-<link rel="stylesheet" href="styly.css">
+<link rel="stylesheet" href="stialy.css">
 </head>
 <body>
 <div class="general">

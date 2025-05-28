@@ -4,7 +4,7 @@ session_start();
 <html>
 <head>
 <title>Administrador Urbanvibes</title>
-<link rel="stylesheet" href="stiale.css">
+<link rel="stylesheet" href="stuiale.css">
 </head>
 <body>
 <div class="general">
@@ -25,24 +25,77 @@ session_start();
 </div>
 <div class="caja2"></div>
 <div class="caja3"></div>
-<div class="titulo">Clientes</div>
 <div class="fondo">
 
 <?php
-	$servidor = "localhost";
-	$usuario = "root";
-	$contraseña = "12345678";
-	$bd = "urbanvibes";
-	$conexion = mysqli_connect($servidor, $usuario, $contraseña, $bd);
-	if (!$conexion) {
-		die("La conexión ha fallado, Error: " . mysqli_connect_error());
+$servidor = "localhost";
+$usuario = "root";
+$contraseña = "12345678";
+$bd = "urbanvibes";
+$conexion = mysqli_connect($servidor, $usuario, $contraseña, $bd);
+if (!$conexion) {
+	die("La conexión ha fallado, Error: " . mysqli_connect_error());
+}
+
+// Por defecto, mostramos clientes
+$mostrar = $_POST['mostrar'] ?? 'clientes';
+
+if ($mostrar == 'empleados') {
+	$seleccion = "SELECT * FROM empleados";
+	$consulta = mysqli_query($conexion, $seleccion);
+	$filas = mysqli_num_rows($consulta);
+
+	// Botón para volver a clientes
+	echo '
+	<form method="POST">
+		<button type="submit" name="mostrar" value="clientes" class="lo">Ver Clientes</button>
+	</form>
+	';
+
+	if ($filas > 0) {
+		echo "<table class='hola'>";
+		echo "<tr><th>DNI</th><th>Nombre</th><th>Apellidos</th><th>Teléfono</th><th>Email</th><th>Contraseña</th><th>Sección</th></tr>";
+		while ($fila = mysqli_fetch_assoc($consulta)) {
+			echo "<tr>
+					<td>{$fila['dni']}</td>
+					<td>{$fila['nombre']}</td>
+					<td>{$fila['apellidos']}</td>
+					<td>{$fila['telefono']}</td>
+					<td>{$fila['email']}</td>
+					<td>{$fila['contrasena']}</td>
+					<td>{$fila['seccion']}</td>
+				  </tr>";
+		}
+		echo "</table>";
+	} else {
+		echo "<div style='
+			background-color: #ffcccc;
+			color: #a10000;
+			padding: 20px;
+			font-size: 20px;
+			font-weight: bold;
+			text-align: center;
+			border: 2px solid #a10000;
+			border-radius: 10px;
+			box-shadow: 0 0 10px red;
+			margin-top: 20px;
+		'>⚠️ No hay datos en la tabla de empleados.</div>";
 	}
+} else {
 	$seleccion = "SELECT * FROM clientes";
 	$consulta = mysqli_query($conexion, $seleccion);
 	$filas = mysqli_num_rows($consulta);
+
+	// Botón para ver empleados
+	echo '
+	<form method="POST">
+		<button type="submit" name="mostrar" value="empleados" class="lo">Ver Empleados</button>
+	</form>
+	';
+
 	if ($filas > 0) {
-		echo "<table class = 'hola'>";
-		echo "<tr><th>DNI</th><th >Nombre</th><th>Apellidos</th><th>Email</th><th>Contraseña</th><th>Ciudad</th></tr>";
+		echo "<table class='hola'>";
+		echo "<tr><th>DNI</th><th>Nombre</th><th>Apellidos</th><th>Email</th><th>Contraseña</th><th>Ciudad</th></tr>";
 		while ($fila = mysqli_fetch_assoc($consulta)) {
 			echo "<tr>
 					<td>{$fila['dni']}</td>
@@ -55,10 +108,25 @@ session_start();
 		}
 		echo "</table>";
 	} else {
-		echo "No hay datos en la tabla.";
+		echo "<div style='
+			background-color: #ffcccc;
+			color: #a10000;
+			padding: 20px;
+			font-size: 20px;
+			font-weight: bold;
+			text-align: center;
+			border: 2px solid #a10000;
+			border-radius: 10px;
+			box-shadow: 0 0 10px red;
+			margin-top: 20px;
+		'>⚠️ No hay datos en la tabla de clientes.</div>";
 	}
-	mysqli_close($conexion);
-	?>
+}
+
+mysqli_close($conexion);
+?>
+
+
 
 </div>
 </div>
