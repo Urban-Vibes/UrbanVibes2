@@ -677,7 +677,7 @@ async function enviarMensajeTelegram(detallesPago) {
             console.log('Mensaje enviado a Telegram exitosamente');
 
             // 🔁 También enviar ID de transacción a PHP
-            await fetch('enviar_correo.php', {
+            await fetch('enviar_email.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
