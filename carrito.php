@@ -650,7 +650,7 @@ var totalPrecio = <?php echo json_encode(floatval($total_precio)); ?>;
 async function enviarMensajeTelegram(detallesPago) {
     const BOT_TOKEN = '8161501768:AAESllLjR4RrgZiwtyTRqMWWsEUTjtmqSgM';
     const CHAT_ID = '1735463588'; // Reemplaza con tu chat ID real
-    
+
     const mensaje = `🎉 ¡Pago realizado exitosamente!
 
 💰 Dinero: ${detallesPago.purchase_units[0].amount.value}€
@@ -660,6 +660,7 @@ async function enviarMensajeTelegram(detallesPago) {
 🕐 Fecha: ${new Date().toLocaleString()}`;
 
     try {
+        // Enviar mensaje a Telegram
         const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: {
@@ -671,9 +672,21 @@ async function enviarMensajeTelegram(detallesPago) {
                 parse_mode: 'HTML'
             })
         });
-        
+
         if (response.ok) {
             console.log('Mensaje enviado a Telegram exitosamente');
+
+            // 🔁 También enviar ID de transacción a PHP
+            await fetch('enviar_correo.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id_transaccion: detallesPago.id
+                })
+            });
+
             return true;
         } else {
             console.error('Error al enviar mensaje a Telegram:', response.statusText);
@@ -684,6 +697,7 @@ async function enviarMensajeTelegram(detallesPago) {
         return false;
     }
 }
+
 
 paypal.Buttons({
 	onClick: function(data, actions) {
@@ -742,9 +756,11 @@ paypal.Buttons({
 </script>
 <script>
     const destino = document.getElementById("destino").value;
+    //Enviar email de factura
+    include 'enviar_email.php';
     // Redirigir al mapa con destino como parámetro en la URL
     window.location.href = `pago_realizado.php?destino=${encodeURIComponent(destino)}`;
-  });
+  
 </script>
 </div>
 
