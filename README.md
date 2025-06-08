@@ -26,7 +26,7 @@ Explora una experiencia moderna centrada en diseño, funcionalidad y estilo.
 ## 📸 Capturas de pantalla
 
 <p float="left">
-  <img src="html/Urbanvibes/logo(1).png" width="300" />
+  <img src="html/Urbanvibes/logo (1).png" width="300" />
 </p>
 
 ---
