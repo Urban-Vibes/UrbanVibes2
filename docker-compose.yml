@@ -1,0 +1,56 @@
+services:
+  smtp-relay:
+    image: tecnativa/postfix-relay
+    container_name: urbanvibes_smtp
+    restart: unless-stopped
+    environment:
+      - MAIL_RELAY_HOST=smtp.gmail.com
+      - MAIL_RELAY_PORT=587
+      - MAIL_RELAY_USER=urbanvibesmdrz@gmail.com
+      - MAIL_RELAY_PASS=emgj nvna yrpu cmfp
+      - MAIL_CANONICAL_DOMAINS=gmail.com
+      - MAIL_NON_CANONICAL_DEFAULT=urbanvibesmdrz@gmail.com
+    networks:
+      - urbanvibes_network
+
+  db:
+    image: mysql:8.0
+    container_name: urbanvibes_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: urbanvibes
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - urbanvibes_network
+
+  web:
+    build: .
+    container_name: urbanvibes_web
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - /home/marcos/Escritorio/proyecto/html/Urbanvibes:/var/www/html
+    depends_on:
+      - db
+      - smtp-relay
+    networks:
+      - urbanvibes_network
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=urbanvibes
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=12345678
+      - SMTP_HOST=smtp-relay
+      - SMTP_PORT=25
+
+volumes:
+  mysql_data:
+
+networks:
+  urbanvibes_network:
+    driver: bridge
